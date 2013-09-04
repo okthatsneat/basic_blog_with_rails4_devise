@@ -1,0 +1,15 @@
+<h1>Listing articles</h1>
+<div id="articles">
+  <% @articles.each do|article| %>
+  <div id="article">
+    <h3><%= article.title %></h3>
+    <%= simple_format article.body %>
+    <small>
+      <%= link_to 'Edit', edit_article_path(article) %> |
+      <%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure?' } %>
+    </small>
+  </div>
+  <% end %>
+</div>
+
+<%= link_to 'New article', new_article_path %>
