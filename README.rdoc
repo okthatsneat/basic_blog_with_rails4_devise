@@ -1,28 +1,15 @@
-== README
+Basic CRUD Blog with Devise, Cucumber acceptance tests, and Rspec model unit tests
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+==TASK:
 
-Things you may want to cover:
+Implement a simple blog in rails 4. Nothing fancy, what I basically expect is:
 
-* Ruby version
+- Everybody can do a basic CRUD for articles. That's it - no comments, images, whatsoever, just articles.
 
-* System dependencies
+- Bonus points if you add a quick login system (you can use devise standard scaffold).
 
-* Configuration
+- One thing that is mandatory are unit tests for the models and integration tests for the workflow (you can use whatever you like)
 
-* Database creation
+- I don't care about the layout, only functionality for now.
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+You can use scaffolding as much as you like, so I expect this shouldnt be more than 3 - 4 hours
