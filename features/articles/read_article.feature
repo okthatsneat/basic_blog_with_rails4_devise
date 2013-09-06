@@ -9,7 +9,7 @@ Feature: Read article
       When I visit the front page
       Then I can see all articles of the blog
 
-      Scenario: Logged out user sees articles in decending order
+      Scenario: Logged out user sees articles in descending order
         Given There are articles on the blog
       When I visit the front page
       Then I can see a date of creation on each article
