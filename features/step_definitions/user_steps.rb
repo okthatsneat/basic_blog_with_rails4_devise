@@ -22,6 +22,12 @@ def create_user
   @user = FactoryGirl.create(:user, @visitor)
 end
 
+def create_other_user
+  @user = FactoryGirl.create(:user, { :name => "The Other Guy", :email => "theOther@guy.com",
+    :password => "password", :password_confirmation => "password" } )
+end
+
+
 def delete_user
   @user ||= User.where(:email => @visitor[:email]).first
   @user.destroy unless @user.nil?
@@ -44,6 +50,14 @@ def sign_in
   fill_in "user_password", :with => @visitor[:password]
   click_button "Sign in"
 end
+
+def sign_in_other_user
+  visit '/users/sign_in'
+  fill_in "user_email", :with => @user.email
+  fill_in "user_password", :with => @user.password
+  click_button "Sign in"
+end
+
 
 ### GIVEN ###
 Given /^I am not logged in$/ do

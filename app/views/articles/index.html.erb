@@ -1,15 +1,19 @@
-<h1>Listing articles</h1>
+<h1>All Articles</h1>
 <div id="articles">
   <% @articles.each do|article| %>
   <div id="article">
+    <p>Published at: <%= article.created_at%></p>
     <h3><%= article.title %></h3>
-    <%= simple_format article.body %>
-    <small>
-      <%= link_to 'Edit', edit_article_path(article) %> |
-      <%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure?' } %>
-    </small>
+      <%= simple_format article.body %>
+    <p>Author: <%= article.user.name%></p>
+    <% if article_belongs_to_user?(article) %>
+      <small>
+        <%= link_to 'Edit', edit_article_path(article) %> |
+        <%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure?' } %>
+      </small>
+    <% end %>    
   </div>
   <% end %>
 </div>
 
-<%= link_to 'New article', new_article_path %>
+<%= link_to 'New article', new_article_path if user_signed_in? %>

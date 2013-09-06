@@ -1,5 +1,8 @@
 class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only:[:new, :edit, :create, :update, :destroy] 
+  helper_method :article_belongs_to_user?
+
 
   # GET /articles
   # GET /articles.json
@@ -19,13 +22,18 @@ class ArticlesController < ApplicationController
 
   # GET /articles/1/edit
   def edit
+    if !article_belongs_to_user?(@article)
+      respond_to do |format|
+      format.html { redirect_to :back, notice:'You cannot update articles that do not belong to you'}
+      format.json { head :no_content }        
+      end
+    end
   end
 
   # POST /articles
   # POST /articles.json
   def create
-    @article = Article.new(article_params)
-
+    @article = current_user.articles.build(article_params)
     respond_to do |format|
       if @article.save
         format.html { redirect_to @article, notice: 'Article was successfully created.' }
@@ -41,9 +49,9 @@ class ArticlesController < ApplicationController
   # PATCH/PUT /articles/1.json
   def update
     respond_to do |format|
-      if @article.update(article_params)
+      if article_belongs_to_user?(@article) && @article.update(article_params)
         format.html { redirect_to @article, notice: 'Article was successfully updated.' }
-        format.json { head :no_content }
+        format.json { head :no_content }     
       else
         format.html { render action: 'edit' }
         format.json { render json: @article.errors, status: :unprocessable_entity }
@@ -54,10 +62,17 @@ class ArticlesController < ApplicationController
   # DELETE /articles/1
   # DELETE /articles/1.json
   def destroy
-    @article.destroy
-    respond_to do |format|
-      format.html { redirect_to articles_url }
-      format.json { head :no_content }
+    if article_belongs_to_user?(@article)      
+      @article.destroy 
+      respond_to do |format|
+        format.html { redirect_to articles_url }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to :back, notice:'You cannot delete articles that do not belong to you'}
+        format.json { head :no_content }
+      end       
     end
   end
 
@@ -70,5 +85,9 @@ class ArticlesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def article_params
       params.require(:article).permit(:title, :body)
+    end
+
+    def article_belongs_to_user?(article) 
+      article.user == current_user
     end
 end

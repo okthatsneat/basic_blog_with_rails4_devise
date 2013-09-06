@@ -97,7 +97,13 @@ describe User do
     it "should set the encrypted password attribute" do
       @user.encrypted_password.should_not be_blank
     end
+  end
 
+  describe "article association" do
+    
+    it "should have many articles" do
+      should have_many(:articles)
+    end
   end
 
 end

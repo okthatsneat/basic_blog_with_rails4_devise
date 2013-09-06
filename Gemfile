@@ -38,7 +38,6 @@ gem 'rspec-rails', :group => [:development, :test]
 
 gem "factory_girl_rails", :group => [:development, :test]
 
-
 gem "database_cleaner", '< 1.1.0', :group => :test
 
 gem "email_spec", :group => :test
@@ -48,6 +47,10 @@ gem "cucumber-rails", :group => :test, :require => false
 gem "capybara", :group => :test
 
 gem "figaro"
+
+gem 'selenium-webdriver', :group => :test
+
+gem 'shoulda-matchers', :group => :test
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
